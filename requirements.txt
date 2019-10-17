@@ -1,0 +1,8 @@
+django
+gunicorn
+requests
+django-heroku
+cmake
+Pillow
+face_recognition
+opencv-python-headless
