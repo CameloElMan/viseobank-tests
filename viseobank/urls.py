@@ -29,6 +29,7 @@ from django.urls import path
 
 urlpatterns += [
     path('', include('apps.website.urls')),
+    path('', include('apps.api.urls')),
 ]
 
 #Add URL maps to redirect the base URL to our application
