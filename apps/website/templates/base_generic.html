@@ -1,0 +1,42 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="colorlib.com">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title> ViseoBank - Tu banco 100% digital</title>
+    
+	<!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/nouislider/nouislider.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+	
+</head>
+<body>
+	
+	{% block content %}
+		
+	{% endblock %}
+
+
+	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-validation/dist/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-validation/dist/additional-methods.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-steps/jquery.steps.min.js' %}"></script>
+    <script src="{% static 'vendor/minimalist-picker/dobpicker.js' %}"></script>
+    <script src="{% static 'vendor/nouislider/nouislider.min.js' %}"></script>
+    <script src="{% static 'vendor/wnumb/wNumb.js' %}"></script>
+
+    <script src="{% static 'js/exif.js' %}"></script>
+    <script src="{% static 'js/load-image.all.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/registration_form.js' %}"></script>
+    <script type="text/javascript" src="https://7321491.collect.igodigital.com/collect.js"></script>
+
+    
+</body>
+</html>

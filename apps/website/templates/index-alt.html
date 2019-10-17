@@ -1,0 +1,297 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+	<style>
+#cam-container {
+    position: relative;
+    text-align:center;
+    margin:auto;
+    width:256px;
+    height:192px;
+}
+#countdown {
+  position: absolute;
+  /* margin: auto; */
+  /* margin-top: 100px; */
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  bottom: 0px;
+    right: 0px;
+}
+
+select.error {
+    border-color: red;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
+
+.current .step-number {
+    background-color:red !important;
+}
+#countdown-number {
+  color: white;
+  display: inline-block;
+  line-height: 40px;
+}
+
+#returnButton {
+    background-color: #003161;
+    width: 100px !important;
+    height: 100% !important;
+    padding: 0.5rem;
+    color: white;
+    text-decoration: none;
+}
+svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+svg circle {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 2px;
+  stroke: white;
+  fill: none;
+  animation: countdown 10s linear infinite forwards;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 113px;
+  }
+}
+</style>
+
+
+
+  <div class="main">
+        <div id="asdasd" class="container">
+            <form method="POST" id="signup-form" class="signup-form" action="#">
+                <div>
+                    <h3>Datos personales</h3>
+                    <fieldset>
+                        <h2>Datos personales</h2>
+                        <p class="desc">Gracias por comenzar este viaje con nosotros. Para empezar, algunas preguntas básicas sobre ti.</p>
+                        <div class="fieldset-content">
+                            <div class="form-row">
+                                <label class="form-label">Nombre</label>
+                                <div class="form-flex">
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" id="first_name" class="required"/>
+                                        <span class="text-input">Nombre</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="last_name" id="last_name" class="required"/>
+                                        <span class="text-input">Primer Apellido</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="second_last_name" id="second_last_name" />
+                                        <span class="text-input">Segundo Apellido (Opcional)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" id="email" class="required"/>
+                                <span class="text-input">Ejemplo  :<span>  Jeff@gmail.com</span></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Telefono</label>
+                                <input type="text" name="phone" id="phone" class="required"/>
+                                <span class="text-input">Ejemplo  :<span>+34 612 540 450</span></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <h3>Información Adicional</h3>
+                    <fieldset>
+                        <h2>Información Adicional</h2>
+                        <p class="desc">Gracias, (Nombre ingresado en el anterior paso aqui). Nos podrías facilitar estos datos adicionales?</p>
+                        <div class="fieldset-content">
+                            <div class="form-row">
+                                <label class="form-label">Estado Civil y Sexo</label>
+                                <div class="form-flex">
+                                    <div class="form-group">
+                                        <select  name="estado_civil" id="estado_civil" class="required">
+                                        	<option selected>Soltero/a</option>
+                                        	<option>Casado/a</option>
+                                        </select> 
+                                        <span class="text-input">Estado Civil</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <select  name="Sexo" id="sexo" class="required">
+                                        	<option selected>Masculino</option>
+                                        	<option>Femenino</option>
+                                        </select> 
+                                        <span class="text-input">Sexo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-date">
+                                <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
+                                <div class="form-date-group" id="fecha">
+                                    <div class="form-date-item">
+                                        <select id="birth_date" name="birth_date" class="required"></select>
+                                        <span class="text-input">DD</span>
+                                    </div>
+                                    <div class="form-date-item" style="width:130px;">
+                                        <select id="birth_month" name="birth_month" class="required"></select>
+                                        <span class="text-input">MM</span>
+                                    </div>
+                                    <div class="form-date-item">
+                                        <select id="birth_year" name="birth_year" class="required"></select>
+                                        <span class="text-input">AAAA</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="form-label">Ciudadanía y Dirección</label>
+                                <div class="form-flex">
+                                    <div class="form-group">
+                                        <select  name="estado_civil" id="ciudadania" class="required">
+                                        	<option selected>Sí</option>
+                                        	<option>No</option>
+                                        </select> 
+                                        <span class="text-input">Ciudadanía US? S/N</span>
+                                    </div>
+                                     <div class="form-group">
+                                        <input type="text" name="direccion" id="direccion" class="required"/>
+                                        <span class="text-input">Dirección</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <h3>Normativa</h3>
+                    <fieldset>
+                        <h2>Normativa</h2>
+                        <p class="desc">Ahora, necesitamos algunas informaciones obligatorias para poder operar</p>
+                        <div class="fieldset-content">
+                            <div class="form-row">
+                                <label class="form-label">Tipo de documento y Numero</label>
+                                <div class="form-flex">
+                                    <div class="form-group">
+                                        <select  name="tipo_doc" id="documentType" class="required">
+                                        	<option selected>Pasaporte</option>
+                                        	<option>Cédula</option>
+                                        </select> 
+                                        <span class="text-input">Tipo de documento</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="documentNumber" id="documentNumber" class="required"/>
+                                        <span class="text-input">Numero de documento</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="form-label">Cedula y Residencia</label>
+                                <div class="form-flex">                                    
+                                     <div class="form-group">
+                                        <input id="cardInput" type="file"
+										accept="image/png, image/jpeg" class="required"/>
+                                        <span class="text-input">Cédula</span>
+                                    </div>
+                                	<div class="form-group">
+                                        <select  name="residencia" id="residencia" class="required">
+                                        	<option selected>Sí</option>
+                                        	<option>No</option>
+                                        </select> 
+                                        <span class="text-input">Residente legal en República Dominicana? S/N</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <h3>Seguridad</h3>
+                    <fieldset>
+                        <h2>Seguridad</h2>
+                        <p class="desc">Ya casi terminamos!! Pero la seguridad es lo primero, necesitamos asegurar que nadie suplante tu identidad. Puedes mirar a la cámara para hacer la validación?</p>
+                        <div class="fieldset-content">
+                           <!-- <img id="cardPreview" src="" alt="Image preview..." width="320" height="240">
+                            <video playsinline id="video" width="320" height="240" <!-- onplay="onPlay(this)" muted autoplay></video>
+							<span id="counter"></span> -->
+                            <p id="validation-msg"></p>
+                            <p id="validation-button" style="display:none;text-align:center;">
+                                <a href="/" id="returnButton">Volver a inicio</a>
+                            </p>
+                            <div id="cam-container">
+                                <video playsinline id="video" width="256" height="192" muted autoplay></video>
+                                <div id="contdown-container">
+                                    <div id="countdown">
+                                      <div id="countdown-number" class="noselect"></div>
+                                          <!-- <svg>
+                                            <circle r="18" cx="20" cy="20"></circle>
+                                        </svg> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                              
+						</div>
+                    </fieldset>
+                   
+                   <h3>Producto a contratar</h3>
+                    <fieldset>
+                        <h2>Producto a contratar</h2>
+                        <p class="desc">Enhorabuena!! Cumples todos los requisitos para efectuar operaciones con nosotros. En qué producto estás interesado?</p>
+                        <div class="fieldset-content">
+                           <div class="form-row">
+                                <label class="form-label">Producto?</label>
+                                <div class="form-flex">
+                                    <div class="form-group">
+                                        <select  name="productType" id="productType" >
+                                        	<option selected>Cuenta corriente</option>
+                                        	<option>Cuenta de ahorro</option>
+                                            <option>Certificado</option>
+                                            <option>Préstamo personal</option>
+                                        </select> 
+                                        <span class="text-input">Tipo de producto a contratar</span>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="form-label">Explícanos brevemente tu necesidad</label>
+                                <div class="form-flex">                                   
+                                    <div class="form-group">
+                                        <textarea type="text" name="necesidad" id="necesidad" ></textarea>
+                                        <span class="text-input">Escribe aquí.</span>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+
+
+
+			
+{% endblock %}
