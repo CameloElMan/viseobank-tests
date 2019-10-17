@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from website.models import WebSettings
+from apps.website.models import WebSettings
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 import base64
-import face_recognition
+# import face_recognition
 import cv2 #on local switch to cv2 only.
 import time
 import os
@@ -83,10 +83,6 @@ class SalesforceConnection:
 
 #----------------------------------------
 
-def randomString(stringLength=10):
-        """Generate a random string of fixed length """
-        letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for i in range(stringLength))
 
 def index(request):
         active_settings = WebSettings.objects.filter(is_active=True)
@@ -94,11 +90,13 @@ def index(request):
         if active_settings.count() is not 1:
                 pass #throw exception
         
-        active_settings = active_settings.get();
+        try:
+                active_settings = active_settings.get();
+        except WebSettings.DoesNotExist:
+                active_settings=None
         
-        
-        return render(request, 'index.html', context=model_to_dict(active_settings))
-
+        # return render(request, 'index.html', context=model_to_dict(active_settings))
+        return render(request, 'index.html')
 def landing_page(request):
         return render(request, 'landing_page.html')
 
@@ -131,65 +129,69 @@ def create_lead(request):
         sc.create_lead(params)
         return JsonResponse({})
         
-@csrf_exempt
-def validate_photo(request):
-        print('======================START=================' )
-        active_settings = WebSettings.objects.filter(is_active=True)
-        card = base64.b64decode(request.POST.get("cardPhoto").partition(',')[2])
-        cam = base64.b64decode(request.POST.get("camFrame").partition(',')[2])
-        match = False
+# def randomString(stringLength=10):
+#         """Generate a random string of fixed length """
+#         letters = string.ascii_lowercase
+#         return ''.join(random.choice(letters) for i in range(stringLength))
+# @csrf_exempt
+# def validate_photo(request):
+#         print('======================START=================' )
+#         active_settings = WebSettings.objects.filter(is_active=True)
+#         card = base64.b64decode(request.POST.get("cardPhoto").partition(',')[2])
+#         cam = base64.b64decode(request.POST.get("camFrame").partition(',')[2])
+#         match = False
         
-        random_string = randomString(10);
-        card_filename = random_string + '_card.jpeg'
-        with open('tmp/'+card_filename, 'wb') as f:
-                f.write(card)
+#         random_string = randomString(10);
+#         card_filename = random_string + '_card.jpeg'
+#         with open('tmp/'+card_filename, 'wb') as f:
+#                 f.write(card)
                 
-        cam_filename = random_string + '_cam.jpeg'
-        with open('tmp/'+cam_filename, 'wb') as f:
-                f.write(cam)
+#         cam_filename = random_string + '_cam.jpeg'
+#         with open('tmp/'+cam_filename, 'wb') as f:
+#                 f.write(cam)
                 
-        print(os.getcwd())
+#         print(os.getcwd())
         
-        card = cv2.imread('tmp/'+card_filename)
-        card_gray = cv2.cvtColor(card, cv2.COLOR_BGR2GRAY)
+#         card = cv2.imread('tmp/'+card_filename)
+#         card_gray = cv2.cvtColor(card, cv2.COLOR_BGR2GRAY)
 
-        card3c = np.zeros_like(card)
-        card3c[:,:,0] = card_gray
-        card3c[:,:,1] = card_gray
-        card3c[:,:,2] = card_gray
+#         card3c = np.zeros_like(card)
+#         card3c[:,:,0] = card_gray
+#         card3c[:,:,1] = card_gray
+#         card3c[:,:,2] = card_gray
         
-        cam = cv2.imread('tmp/'+cam_filename)
-        cam_gray = cv2.cvtColor(cam, cv2.COLOR_BGR2GRAY)
+#         cam = cv2.imread('tmp/'+cam_filename)
+#         cam_gray = cv2.cvtColor(cam, cv2.COLOR_BGR2GRAY)
 
-        cam3c = np.zeros_like(cam)
-        cam3c[:,:,0] = cam_gray
-        cam3c[:,:,1] = cam_gray
-        cam3c[:,:,2] = cam_gray
+#         cam3c = np.zeros_like(cam)
+#         cam3c[:,:,0] = cam_gray
+#         cam3c[:,:,1] = cam_gray
+#         cam3c[:,:,2] = cam_gray
         
         
-        biden_encodings = face_recognition.face_encodings(card3c, num_jitters=1)
-        unknown_encodings = face_recognition.face_encodings(cam3c, num_jitters=1)
+#         biden_encodings = face_recognition.face_encodings(card3c, num_jitters=1)
+#         unknown_encodings = face_recognition.face_encodings(cam3c, num_jitters=1)
 
-        print('biden :: ' + str(biden_encodings))
-        print('unknown_encodings :: ' + str(unknown_encodings))
+#         print('biden :: ' + str(biden_encodings))
+#         print('unknown_encodings :: ' + str(unknown_encodings))
         
-        if len(biden_encodings) > 0 and len(unknown_encodings) > 0:
-                results = face_recognition.compare_faces([biden_encodings[0]], unknown_encodings[0], 0.7)
-                distance = face_recognition.face_distance([biden_encodings[0]], unknown_encodings[0])
-                print('dist: ' + str(distance))
-                match = (results[0] is np.True_)
+#         if len(biden_encodings) > 0 and len(unknown_encodings) > 0:
+#                 results = face_recognition.compare_faces([biden_encodings[0]], unknown_encodings[0], 0.7)
+#                 distance = face_recognition.face_distance([biden_encodings[0]], unknown_encodings[0])
+#                 print('dist: ' + str(distance))
+#                 match = (results[0] is np.True_)
 
-        print(match)
-        if match:
-                modal_title = active_settings[0].success_message_title
-                modal_message = active_settings[0].success_message_body
+#         print(match)
+#         if match:
+#                 modal_title = active_settings[0].success_message_title
+#                 modal_message = active_settings[0].success_message_body
                 
 
-        else:
-                modal_title = active_settings[0].failure_message_title
-                modal_message = active_settings[0].failure_message_body
+#         else:
+#                 modal_title = active_settings[0].failure_message_title
+#                 modal_message = active_settings[0].failure_message_body
         
-        os.remove('tmp/'+card_filename)
-        os.remove('tmp/'+cam_filename)
-        print('======================END=================' )
-        return JsonResponse({'match' : match})
+#         os.remove('tmp/'+card_filename)
+#         os.remove('tmp/'+cam_filename)
+#         print('======================END=================' )
+#         return JsonResponse({'match' : match})

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from website.models import WebSettings
+from apps.website.models import WebSettings
 
 # Register the Admin classes for WebSettings using the decorator
 @admin.register(WebSettings)
